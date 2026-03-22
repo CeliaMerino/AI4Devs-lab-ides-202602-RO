@@ -1,9 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from '../App';
+import { MemoryRouter } from 'react-router-dom';
+import { AppRoutes } from '../App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App', () => {
+  it('renders recruiter dashboard with add candidate entry point', () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <AppRoutes />
+      </MemoryRouter>
+    );
+    expect(screen.getByRole('heading', { name: /recruiter dashboard/i })).toBeInTheDocument();
+    expect(screen.getByTestId('add-candidate-nav')).toHaveAttribute('href', '/recruiter/candidates/new');
+  });
 });
