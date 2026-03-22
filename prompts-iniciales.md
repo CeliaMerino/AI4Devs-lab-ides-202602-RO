@@ -2,6 +2,8 @@
 
 Este documento recoge los **prompts** que orientaron el trabajo en los tres tickets técnicos del ejercicio: **base de datos**, **backend** y **frontend**, para la historia de usuario **«Añadir candidato al sistema ATS»**.
 
+Antes de implementar, cada ticket se **amplió y detalló** usando el comando **`enhance-ticket`**: a partir del texto breve del enunciado se generó una versión enriquecida (criterios de aceptación, rutas, contratos de API, validaciones, accesibilidad, definición de hecho, etc.). Los prompts que siguen describen el núcleo del trabajo; el refinamiento vino de ese paso de *enhancement* aplicado al ticket.
+
 ---
 
 ## Contexto común (copiar al inicio de cada sesión con el asistente)
@@ -105,3 +107,4 @@ manual con validación y listas repetibles.
 
 Estos prompts se usaron como **entrada iterativa** en Cursor (chat y edición asistida), ajustando el
 detalle según la estructura real del repositorio base tras leer `README.md` y el esquema existente.
+El flujo fue: ticket del enunciado → **`enhance-ticket`** (ticket ampliado) → prompts y desarrollo asistido.
