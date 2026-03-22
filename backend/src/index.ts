@@ -1,26 +1,31 @@
-import { Request, Response, NextFunction } from 'express';
+import 'dotenv/config';
+import fs from 'fs';
+import path from 'path';
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import dotenv from 'dotenv';
+import { candidateRoutes } from './routes/candidateRoutes';
+import { uploadRoutes } from './routes/uploadRoutes';
+import { errorHandler } from './middleware/errorHandler';
 
-dotenv.config();
-const prisma = new PrismaClient();
+const uploadDir = process.env.UPLOAD_DIR ?? path.join(process.cwd(), 'uploads');
+fs.mkdirSync(uploadDir, { recursive: true });
 
 export const app = express();
-export default prisma;
 
-const port = 3010;
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hola LTI!');
+app.get('/', (_req, res) => {
+  res.send('Hello LTI!');
 });
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.type('text/plain'); 
-  res.status(500).send('Something broke!');
-});
+app.use(candidateRoutes);
+app.use(uploadRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+app.use(errorHandler);
+
+const port = Number(process.env.PORT ?? 3010);
+
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+  });
+}
